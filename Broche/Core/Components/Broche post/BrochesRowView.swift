@@ -20,19 +20,25 @@ struct BrochesRowView: View {
             
             //user profile and username and location
             HStack {
-                Button(action: {
-                    // action goes here..
-                }, label: {
-                    Image(systemName: "mappin.circle")
-                        .font(.subheadline)
-                        .imageScale(.large)
-                        .foregroundColor(.black)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 6)
+                        .foregroundColor(.gray)
+                        .frame(width: 55, height: 55)
                     
-                    Text("Mt.Juiet, TN")
-                        .font(.subheadline)
-                        .foregroundColor(.black)
+                    Button(action: {
+                        // action goes here..
+                    }, label: {
+                        Image(systemName: "mappin.circle")
+                            .font(.subheadline)
+                            .imageScale(.large)
+                            .foregroundColor(.black)
+                    })
+                }
+                        Text("Mt.Juiet, TN")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                        
                     
-                })
                 
                 Spacer()
                 
@@ -40,21 +46,17 @@ struct BrochesRowView: View {
                     //profile page
                 },
             label: {
-                Text("Johnson6")
-                    .foregroundColor(.black)
-                    .font(.footnote)
-                    .bold()
                 
                 Image("exampleimage")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 32, height: 32)
+                    .frame(width: 42, height: 42)
                     .clipShape(Circle())
                 
                    })
                 
                }
-            .padding(.horizontal,6 )
+            .padding(.horizontal,12 )
             
             //image
             Image("exampleimage")

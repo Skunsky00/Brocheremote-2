@@ -15,18 +15,22 @@ struct PhotoPickerView: View {
         NavigationStack {
             VStack {
                 if !photoPicker.images.isEmpty {
-                    TabView {
-                        ForEach(0..<photoPicker.images.count, id: \.self) { index in
-                            photoPicker.images[index]
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 400, height:500)
-                                .clipped()
+                    GeometryReader {
+                        let size = $0.size
+                        TabView {
+                            ForEach(0..<photoPicker.images.count, id: \.self) { index in
+                                photoPicker.images[index]
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .scaledToFill()
+                                    .frame(width: size.width, height: size.height)
+                                   // .frame(width: 400, height:500)
+                                    .clipped()
+                            }
                         }
+                        .tabViewStyle(.page)
+                        .frame(height: 400)
                     }
-                    .tabViewStyle(.page)
-                    .frame(height: 400)
-                    
                     TextField("Enter your caption..", text: $captionText)
                         .padding()
                     

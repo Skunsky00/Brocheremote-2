@@ -16,9 +16,7 @@ class ProfileModel: ObservableObject {
     @Published var image: Image?
     @Published var images: [Image] = []
     @Published var selectedImage: UIImage?
-  //  @Published var firstName: String = ""
-  //  @Published var lastName: String = ""
-   // @Published var aboutMe: String = ""
+  
     
     // MARK: - Profile Image
     
