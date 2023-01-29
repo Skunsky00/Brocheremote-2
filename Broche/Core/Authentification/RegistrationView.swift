@@ -6,15 +6,20 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct RegistrationView: View {
     @State private var email = ""
     @State private var fullname = ""
     @State private var username = ""
     @State private var password = ""
+    
+    @State var selectedItems: [PhotosPickerItem] = []
+    @State var data: Data?
+    
     @Environment(\.presentationMode) var mode
     @EnvironmentObject var viewModel: AuthViewModel
-    @StateObject var viewModels = ProfileModel()
+    
     var color = #colorLiteral(red: 0.1698683487, green: 0.3265062064, blue: 0.74163749, alpha: 1)
     var body: some View {
       // Form {
@@ -26,8 +31,46 @@ struct RegistrationView: View {
                         
                         //profile pic picker
                         
-                        ProfileForm()
-                            .padding(.bottom, 30)
+                        if let data = data, let uiImage = UIImage(data: data) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 140, height: 140)
+                                .clipShape(Circle())
+                        }
+                        
+                        if (data == nil) {
+                            PhotosPicker(
+                                selection: $selectedItems,
+                                maxSelectionCount: 1,
+                                matching: .images
+                                
+                            ) {
+                                Image(systemName: "plus.circle")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 140, height: 140)
+                                    .foregroundColor(.white)
+                            }
+                            .onChange(of: selectedItems) { result in
+                                guard let item = selectedItems.first else {
+                                    return
+                                }
+                                item.loadTransferable(type: Data.self) { result in
+                                    switch result {
+                                    case .success(let data):
+                                        if let data = data {
+                                            self.data = data
+                                        } else {
+                                            print("Data is nil")
+                                        }
+                                    case .failure(let error):
+                                        fatalError("\(error)")
+                                    }
+                                }
+                            }
+                        }
                         
                         VStack(spacing: 20) {
                             CustomTextField(text: $email, paceholder: Text("Email"), imageName: "envelope")
@@ -62,7 +105,11 @@ struct RegistrationView: View {
                         
                         // sign in
                         Button(action: {
-                            viewModel.register(withEmail: email, password: password, fullname: fullname, username: username)
+                            if let image = UIImage(data: data!) {
+                                viewModel.register(withEmail: email, password: password, fullname: fullname, username: username, image: image)
+                                print("registered")
+                            }
+                            
                         }, label: {
                             Text("Sign up")
                                 .font(.headline).foregroundColor(.white)
