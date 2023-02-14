@@ -9,16 +9,17 @@ import SwiftUI
 import Kingfisher
 
 struct ProfileHeaderView: View {
-    let user: User
+    @ObservedObject var viewModle: ProfileViewModel
+    
     var body: some View {
         VStack {
-            KFImage(URL(string: user.profileImageUrl))
+            KFImage(URL(string: viewModle.user.profileImageUrl))
                 .resizable()
                 .scaledToFill()
                 .frame(width: 84, height: 84)
                 .clipShape(Circle())
             
-            Text(user.fullname)
+            Text(viewModle.user.fullname)
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.vertical, 6)
             
@@ -29,7 +30,7 @@ struct ProfileHeaderView: View {
                 
             }.padding(.vertical, 4)
             
-            ProfileActionButtonView(isCurrentUser: user.isCurrentUser)
+            ProfileActionButtonView(viewModel: viewModle)
             
             Text("Creator of creator of broche")
                 .font(.system(size: 15))
