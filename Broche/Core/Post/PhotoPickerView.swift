@@ -11,6 +11,7 @@ import PhotosUI
 struct PhotoPickerView: View {
     @StateObject var photoPicker = PhotoPicker()
     @State var captionText = ""
+    @ObservedObject var viewModel = UploadPostViewModel()
     var body: some View {
         NavigationStack {
             VStack {
@@ -34,7 +35,11 @@ struct PhotoPickerView: View {
                     TextField("Enter your caption..", text: $captionText)
                         .padding()
                     
-                    Button(action: {}, label:{ Text("Share")
+                    Button(action: {
+                  //      if let image = photoPicker.$image {
+                   //         viewModel.uploadPost(caption: captionText, image: image)
+                      //  }
+                    }, label:{ Text("Share")
                         .font(.system(size:16, weight: .semibold))
                         .frame(width: 360, height: 50)
                         .background(Color.blue)
