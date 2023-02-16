@@ -36,9 +36,9 @@ struct PhotoPickerView: View {
                         .padding()
                     
                     Button(action: {
-                  //      if let image = photoPicker.$image {
-                   //         viewModel.uploadPost(caption: captionText, image: image)
-                      //  }
+                     //   if let image = !photoPicker.$image, let uiImage = !photoPicker.$imageSelections {
+                    //        viewModel.uploadPost(caption: captionText, image: image)
+                  //      }
                     }, label:{ Text("Share")
                         .font(.system(size:16, weight: .semibold))
                         .frame(width: 360, height: 50)
